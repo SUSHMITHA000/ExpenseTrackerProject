@@ -15,7 +15,7 @@ namespace ExpenseTracker.Models
 
         public DateTime ExpenseDate { get; set; }
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public int UserId { get; set; }
 
