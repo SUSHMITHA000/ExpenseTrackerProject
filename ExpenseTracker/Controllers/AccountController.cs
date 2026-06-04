@@ -2,6 +2,8 @@
 using ExpenseTracker.Models;
 using ExpenseTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+
 
 namespace ExpenseTracker.Controllers
 {
@@ -40,5 +42,33 @@ namespace ExpenseTracker.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _context.Users
+                    .FirstOrDefault(x =>
+                        x.Email == model.Email &&
+                        x.PasswordHash == model.Password);
+
+                if (user != null)
+                {
+                    return Content("Login Successful");
+                }
+
+                ViewBag.Error = "Invalid Email or Password";
+            }
+
+            return View(model);
+        }
     }
+
 }
