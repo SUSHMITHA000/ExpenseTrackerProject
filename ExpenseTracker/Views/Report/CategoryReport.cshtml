@@ -1,0 +1,20 @@
+﻿@model dynamic
+
+<h2>Category Wise Expense Report</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Category</th>
+        <th>Total Amount</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Category</td>
+            <td>₹@item.TotalAmount</td>
+        </tr>
+    }
+
+</table>
