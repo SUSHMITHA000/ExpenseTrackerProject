@@ -2,13 +2,27 @@
 
 <hr />
 
-<h3>Welcome!</h3>
+<div>
+    <h3>Total Users: @ViewBag.TotalUsers</h3>
+</div>
 
-<p>You have successfully logged in.</p>
+<div>
+    <h3>Total Expenses: @ViewBag.TotalExpenses</h3>
+</div>
 
-<ul>
-    <li>Add Expense</li>
-    <li>View Expenses</li>
-    <li>Expense Reports</li>
-    <li>Category Summary</li>
-</ul>
+<div>
+    <h3>Total Categories: @ViewBag.TotalCategories</h3>
+</div>
+
+<div>
+    <h3>Total Amount Spent: ₹@ViewBag.TotalAmount</h3>
+</div>
+
+<hr />
+
+<a href="/Expense">Add Expense</a>
+
+<br />
+<br />
+
+<a href="/Expense/List">View Expenses</a>

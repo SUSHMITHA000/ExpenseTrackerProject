@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ExpenseTracker.Models.Expense>
+
+<h2>Expense List</h2>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>ID</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ExpenseId</td>
+            <td>@item.Amount</td>
+            <td>@item.Description</td>
+            <td>@item.ExpenseDate.ToShortDateString()</td>
+            <td>@item.Category.CategoryName</td>
+        </tr>
+
+        <td>
+            <a href="/Expense/Edit/@item.ExpenseId">Edit</a>
+
+            |
+
+            <a href="/Expense/Delete/@item.ExpenseId">
+                Delete
+            </a>
+        </td>
+    }
+
+</table>

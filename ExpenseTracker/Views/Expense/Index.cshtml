@@ -1,0 +1,42 @@
+﻿@model ExpenseTracker.Models.ViewModels.ExpenseViewModel
+
+<h2>Add Expense</h2>
+
+<form method="post">
+
+    <div>
+        <label>Amount</label>
+        <input asp-for="Amount" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>Description</label>
+        <input asp-for="Description" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>Date</label>
+        <input asp-for="ExpenseDate" type="date" />
+    </div>
+
+    <br />
+
+    <div>
+        <label>Category</label>
+        <select asp-for="CategoryId"
+                asp-items="ViewBag.Categories">
+            <option value="">Select Category</option>
+        </select>
+    </div>
+
+    <br />
+
+    <button type="submit">
+        Save Expense
+    </button>
+
+</form>
