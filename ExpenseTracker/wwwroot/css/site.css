@@ -20,3 +20,116 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Sidebar */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #212529;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #343a40;
+}
+
+    .sidebar-header h3 {
+        color: white;
+        margin: 0;
+    }
+
+.sidebar .nav-link {
+    color: white;
+    padding: 14px 20px;
+    font-size: 16px;
+}
+
+    .sidebar .nav-link:hover {
+        background-color: #343a40;
+        color: white;
+    }
+
+/* Main Content */
+
+.content {
+    flex: 1;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.login-page {
+    min-height: 100vh;
+    background: #1f1f1f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 1100px;
+    min-height: 650px;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #2a2a2a;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.login-left {
+    width: 45%;
+    background: linear-gradient(135deg,#5b5ff5,#6f42c1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-section {
+    text-align: center;
+}
+
+    .brand-section h1 {
+        font-size: 42px;
+        font-weight: bold;
+    }
+
+    .brand-section p {
+        margin-top: 25px;
+        font-size: 20px;
+    }
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 70px;
+}
+
+.login-right {
+    width: 55%;
+    padding: 80px;
+    color: white;
+}
+
+    .login-right h1 {
+        font-weight: bold;
+    }
+
+.subtitle {
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+.login-right label {
+    margin-bottom: 5px;
+}
+
+.login-right .form-control {
+    height: 50px;
+}
+
+.login-right a {
+    text-decoration: none;
+}

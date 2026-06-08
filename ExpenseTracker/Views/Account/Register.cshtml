@@ -1,41 +1,120 @@
-﻿@model ExpenseTracker.Models.ViewModels.RegisterViewModel
+﻿@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
 
-<h2>Register</h2>
+@model ExpenseTracker.Models.ViewModels.RegisterViewModel
 
-<form asp-action="Register" method="post">
+<div class="login-page">
 
-    <div>
-        <label>Full Name</label>
-        <input asp-for="FullName" />
-        <span asp-validation-for="FullName"></span>
+    <div class="login-card">
+
+        <div class="login-left">
+
+            <div class="brand-section">
+
+                <h1>ExpenseTracker</h1>
+
+                <div class="mt-5 text-start">
+
+                    <h4>① Create your account</h4>
+                    <p>Enter your name and email</p>
+
+                    <br />
+
+                    <h4>② Secure it</h4>
+                    <p>Set a strong password</p>
+
+                    <br />
+
+                    <h4>③ Start tracking</h4>
+                    <p>Add expenses instantly</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="login-right">
+
+            <h1>Create Account</h1>
+
+            <p class="subtitle">
+                It's free — no credit card needed
+            </p>
+
+            <form asp-action="Register" method="post">
+
+                <div class="mb-3">
+                    <label>Full Name</label>
+                    <input asp-for="FullName"
+                           class="form-control" />
+                    <span asp-validation-for="FullName"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label>Email Address</label>
+                    <input asp-for="Email"
+                           class="form-control" />
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label>Password</label>
+
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control" />
+
+                        <span asp-validation-for="Password"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Confirm Password</label>
+
+                        <input asp-for="ConfirmPassword"
+                               type="password"
+                               class="form-control" />
+
+                        <span asp-validation-for="ConfirmPassword"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <br />
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+                    Create Account
+                </button>
+
+            </form>
+
+            <hr />
+
+            <p class="text-center">
+
+                Already have an account?
+
+                <a asp-controller="Account"
+                   asp-action="Login">
+                    Sign In
+                </a>
+
+            </p>
+
+        </div>
+
     </div>
 
-    <br />
-
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
-
-    <br />
-
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <br />
-
-    <div>
-        <label>Confirm Password</label>
-        <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-
-    <br />
-
-    <button type="submit">Register</button>
-
-</form>
+</div>

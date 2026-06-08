@@ -1,30 +1,108 @@
-﻿@model ExpenseTracker.Models.ViewModels.LoginViewModel
-
-<h2>Login</h2>
-
-@if (ViewBag.Error != null)
-{
-    <p style="color:red">@ViewBag.Error</p>
+﻿@{
+    Layout = "_AuthLayout";
 }
+@model ExpenseTracker.Models.ViewModels.LoginViewModel
 
-<form asp-action="Login" method="post">
+<div class="login-page">
 
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+    <div class="login-card">
+
+        <div class="login-left">
+
+            <div class="brand-section">
+
+                <h1>ExpenseTracker</h1>
+
+                <p>
+                    Track every rupee.<br />
+                    See where your money goes.
+                </p>
+
+                <div class="stats">
+                    <div>
+                        <h3>₹0</h3>
+                        <span>Start Free</span>
+                    </div>
+
+                    <div>
+                        <h3>8</h3>
+                        <span>Categories</span>
+                    </div>
+
+                    <div>
+                        <h3>3</h3>
+                        <span>Charts</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="login-right">
+
+            <h1>Welcome Back</h1>
+
+            <p class="subtitle">
+                Sign in to your account
+            </p>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <form asp-action="Login" method="post">
+
+                <div class="mb-3">
+
+                    <label>Email Address</label>
+
+                    <input asp-for="Email"
+                           class="form-control" />
+
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Password</label>
+
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control" />
+
+                    <span asp-validation-for="Password"
+                          class="text-danger"></span>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+                    Sign In
+                </button>
+
+            </form>
+
+            <hr />
+
+            <p class="text-center">
+
+                Don't have an account?
+
+                <a asp-controller="Account"
+                   asp-action="Register">
+                    Create one
+                </a>
+
+            </p>
+
+        </div>
+
     </div>
 
-    <br />
-
-    <div>
-        <label>Password</label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <br />
-
-    <button type="submit">Login</button>
-
-</form>
+</div>
