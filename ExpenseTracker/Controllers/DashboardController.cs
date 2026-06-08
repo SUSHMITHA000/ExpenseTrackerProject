@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Data;
+using ExpenseTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracker.Controllers
@@ -14,16 +15,28 @@ namespace ExpenseTracker.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.TotalUsers = _context.Users.Count();
+            DashboardViewModel model = new DashboardViewModel();
 
-            ViewBag.TotalExpenses = _context.Expenses.Count();
+            model.TotalExpense =
+                _context.Expenses.Sum(x => (decimal?)x.Amount) ?? 0;
 
-            ViewBag.TotalCategories = _context.Categories.Count();
+            model.TotalTransactions =
+                _context.Expenses.Count();
 
-            ViewBag.TotalAmount =
-                _context.Expenses.Sum(e => (decimal?)e.Amount) ?? 0;
+            model.MonthlyExpense =
+                _context.Expenses
+                    .Where(x => x.ExpenseDate.Month == DateTime.Now.Month
+                             && x.ExpenseDate.Year == DateTime.Now.Year)
+                    .Sum(x => (decimal?)x.Amount) ?? 0;
 
-            return View();
+            model.TopCategory =
+                _context.Expenses
+                    .GroupBy(x => x.CategoryId)
+                    .OrderByDescending(g => g.Sum(x => x.Amount))
+                    .Select(g => g.First().Category.CategoryName)
+                    .FirstOrDefault() ?? "N/A";
+
+            return View(model);
         }
     }
 }

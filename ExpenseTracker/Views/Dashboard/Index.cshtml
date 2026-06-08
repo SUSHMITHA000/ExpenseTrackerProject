@@ -1,34 +1,120 @@
-﻿<h1>Expense Tracker Dashboard</h1>
+﻿@model ExpenseTracker.Models.ViewModels.DashboardViewModel
 
-<hr />
+<div class="dashboard-container">
 
-<div>
-    <h3>Total Users: @ViewBag.TotalUsers</h3>
+    <div class="dashboard-header">
+
+        <div>
+            <h1>Welcome Back 👋</h1>
+            <p>Track your expenses efficiently</p>
+        </div>
+
+        <div>
+            <h5>@DateTime.Now.ToString("ddd, dd MMM yyyy")</h5>
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <h5>Total Expense</h5>
+
+                <h2>₹@Model.TotalExpense</h2>
+
+                <span>All Time</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <h5>Transactions</h5>
+
+                <h2>@Model.TotalTransactions</h2>
+
+                <span>All Time</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <h5>This Month</h5>
+
+                <h2>₹@Model.MonthlyExpense</h2>
+
+                <span>@DateTime.Now.ToString("MMMM yyyy")</span>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card">
+
+                <h5>Top Category</h5>
+
+                <h2>@Model.TopCategory</h2>
+
+                <span>Highest Spend</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+
+            <div class="dashboard-box">
+
+                <h4>Quick Actions</h4>
+
+                <hr />
+
+                <a href="/Expense" class="btn btn-primary">
+                    Add Expense
+                </a>
+
+                <a href="/Expense/List"
+                   class="btn btn-success">
+                    View Expenses
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="dashboard-box">
+
+                <h4>Reports</h4>
+
+                <hr />
+
+                <a href="/Report/CategoryReport"
+                   class="btn btn-warning">
+                    Category Report
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
-<div>
-    <h3>Total Expenses: @ViewBag.TotalExpenses</h3>
-</div>
-
-<div>
-    <h3>Total Categories: @ViewBag.TotalCategories</h3>
-</div>
-
-<div>
-    <h3>Total Amount Spent: ₹@ViewBag.TotalAmount</h3>
-</div>
-
-<hr />
-
-<a href="/Expense">Add Expense</a>
-
-<br />
-<br />
-
-<a href="/Expense/List">View Expenses</a>
-<br />
-<br />
-
-<a href="/Report/CategoryReport">
-    Category Report
-</a>

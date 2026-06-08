@@ -21,57 +21,59 @@
                 <h3>Expense Tracker</h3>
             </div>
 
-            <ul class="nav flex-column">
+            <ul class="nav flex-column mt-4">
 
-                <li class="nav-item">
+                <li class="nav-item mb-2">
                     <a class="nav-link"
                        asp-controller="Dashboard"
                        asp-action="Index">
-                        Dashboard
+                        📊 Dashboard
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item mb-2">
                     <a class="nav-link"
                        asp-controller="Expense"
                        asp-action="Index">
-                        Add Expense
+                        ➕ Add Expense
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item mb-2">
                     <a class="nav-link"
                        asp-controller="Expense"
                        asp-action="List">
-                        View Expenses
+                        📋 View Expenses
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item mb-2">
                     <a class="nav-link"
                        asp-controller="Report"
                        asp-action="CategoryReport">
-                        Reports
+                        📈 Reports
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item mb-2">
                     <a class="nav-link"
-                       asp-controller="Account"
-                       asp-action="Register">
-                        Register
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link"
-                       asp-controller="Account"
-                       asp-action="Login">
-                        Login
+                       asp-controller="Profile"
+                       asp-action="Index">
+                        👤 Profile
                     </a>
                 </li>
 
             </ul>
+
+            <div class="sidebar-footer">
+
+                <div class="user-avatar">
+                    SB
+                </div>
+
+                <span>Sushmitha</span>
+
+            </div>
 
         </div>
 
