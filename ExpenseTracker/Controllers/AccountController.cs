@@ -61,7 +61,7 @@ namespace ExpenseTracker.Controllers
 
                 if (user != null)
                 {
-                    return Content("Login Successful");
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 ViewBag.Error = "Invalid Email or Password";
