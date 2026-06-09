@@ -1,42 +1,190 @@
 ﻿@model ExpenseTracker.Models.ViewModels.ExpenseViewModel
 
-<h2>Add Expense</h2>
+<div class="row">
 
-<form method="post">
+    <div class="col-lg-9">
 
-    <div>
-        <label>Amount</label>
-        <input asp-for="Amount" />
+        <div class="dashboard-box">
+
+            <h2 class="mb-4">Add Expense</h2>
+
+            <form method="post">
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Amount
+                    </label>
+
+                    <input asp-for="Amount"
+                           class="form-control form-control-lg"
+                           placeholder="Enter Amount" />
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Category
+                    </label>
+
+                    <input type="hidden"
+                           asp-for="CategoryId"
+                           id="CategoryId" />
+
+                    <div class="category-grid">
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(1)">
+                            🍔 Food
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(2)">
+                            🚕 Transport
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(3)">
+                            🛒 Shopping
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(4)">
+                            🧾 Bills
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(5)">
+                            🎬 Entertainment
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(6)">
+                            ❤️ Health
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(7)">
+                            🎓 Education
+                        </button>
+
+                        <button type="button"
+                                class="category-card"
+                                onclick="selectCategory(8)">
+                            ⋯ Other
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Description
+                    </label>
+
+                    <input asp-for="Description"
+                           class="form-control form-control-lg"
+                           placeholder="Expense Description" />
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Expense Date
+                    </label>
+
+                    <input asp-for="ExpenseDate"
+                           type="date"
+                           class="form-control form-control-lg" />
+
+                </div>
+
+                <div class="d-flex gap-3">
+
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+
+                        Save Expense
+
+                    </button>
+
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary px-4">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
 
-    <br />
+    <div class="col-lg-3">
 
-    <div>
-        <label>Description</label>
-        <input asp-for="Description" />
+        <div class="summary-card">
+
+            <small>This Month</small>
+
+            <h4>₹@ViewBag.MonthlyTotal</h4>
+
+            <span class="summary-text">
+                ↑ 38% of total spending
+            </span>
+
+        </div>
+
+        <div class="summary-card">
+
+            <small>Today</small>
+
+            <h4>₹@ViewBag.TodayTotal</h4>
+
+            <span class="summary-text">
+                Today's expenses
+            </span>
+
+        </div>
+
+        <div class="summary-card">
+
+            <small>Top Category</small>
+
+            <h4>@ViewBag.TopCategory</h4>
+
+            <span class="summary-text">
+                Most selected category
+            </span>
+
+        </div>
+
     </div>
 
-    <br />
+<script>
 
-    <div>
-        <label>Date</label>
-        <input asp-for="ExpenseDate" type="date" />
-    </div>
+    function selectCategory(id) {
+        document.getElementById("CategoryId").value = id;
 
-    <br />
+        document
+            .querySelectorAll(".category-card")
+            .forEach(x => x.classList.remove("active-category"));
 
-    <div>
-        <label>Category</label>
-        <select asp-for="CategoryId"
-                asp-items="ViewBag.Categories">
-            <option value="">Select Category</option>
-        </select>
-    </div>
+        event.target.classList.add("active-category");
+    }
 
-    <br />
-
-    <button type="submit">
-        Save Expense
-    </button>
-
-</form>
+</script>

@@ -23,6 +23,29 @@ namespace ExpenseTracker.Controllers
                 "CategoryId",
                 "CategoryName");
 
+            ViewBag.MonthlyTotal =
+    _context.Expenses
+        .ToList()
+        .Where(x =>
+            x.ExpenseDate.Month == DateTime.UtcNow.Month &&
+            x.ExpenseDate.Year == DateTime.UtcNow.Year)
+        .Sum(x => x.Amount);
+
+            ViewBag.TodayTotal =
+                _context.Expenses
+                    .ToList()
+                    .Where(x =>
+                        x.ExpenseDate.Date == DateTime.UtcNow.Date)
+                    .Sum(x => x.Amount);
+
+            ViewBag.TopCategory =
+                _context.Expenses
+                    .ToList()
+                    .GroupBy(x => x.CategoryId)
+                    .OrderByDescending(g => g.Count())
+                    .Select(g => g.First().Category?.CategoryName)
+                    .FirstOrDefault() ?? "N/A";
+
             return View();
         }
 

@@ -15,5 +15,8 @@ namespace ExpenseTracker.Models.ViewModels
 
         [Required]
         public int CategoryId { get; set; }
+
+        [Required]
+        public string SelectedCategory { get; set; }
     }
 }
