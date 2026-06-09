@@ -154,19 +154,24 @@ body {
 
 .stat-card {
     background: white;
-    border-radius: 15px;
+    border-radius: 18px;
     padding: 25px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    transition: .3s;
 }
 
     .stat-card h5 {
-        color: gray;
+        color: #6b7280;
+        font-size: 15px;
     }
 
     .stat-card h2 {
         margin-top: 10px;
-        font-weight: bold;
+        font-size: 32px;
+        font-weight: 700;
+    }
+    .stat-card span {
+        color: #9ca3af;
     }
 
 .dashboard-box {
@@ -174,6 +179,7 @@ body {
     border-radius: 15px;
     padding: 25px;
     box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
+    height: 100%;
 }
 
 
@@ -235,4 +241,20 @@ body {
     flex: 1;
     min-height: 100vh;
     background: #f5f7fb;
+}
+
+.card-blue {
+    border-left: 6px solid #4f46e5;
+}
+
+.card-green {
+    border-left: 6px solid #10b981;
+}
+
+.card-yellow {
+    border-left: 6px solid #f59e0b;
+}
+
+.card-red {
+    border-left: 6px solid #ef4444;
 }

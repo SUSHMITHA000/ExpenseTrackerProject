@@ -59,8 +59,18 @@ namespace ExpenseTracker.Controllers
                         x.Email == model.Email &&
                         x.PasswordHash == model.Password);
 
+
+
                 if (user != null)
                 {
+
+                    HttpContext.Session.SetInt32(
+                         "UserId",
+                          user.UserId);
+
+                    HttpContext.Session.SetString(
+                        "UserName",
+                        user.FullName);
                     return RedirectToAction("Index", "Dashboard");
                 }
 
@@ -68,6 +78,13 @@ namespace ExpenseTracker.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Login");
         }
     }
 
