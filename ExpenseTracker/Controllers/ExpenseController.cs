@@ -4,6 +4,7 @@ using ExpenseTracker.Models;
 using ExpenseTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ExpenseTracker.Controllers
 {
@@ -24,12 +25,12 @@ namespace ExpenseTracker.Controllers
                 "CategoryName");
 
             ViewBag.MonthlyTotal =
-    _context.Expenses
-        .ToList()
-        .Where(x =>
-            x.ExpenseDate.Month == DateTime.UtcNow.Month &&
-            x.ExpenseDate.Year == DateTime.UtcNow.Year)
-        .Sum(x => x.Amount);
+                _context.Expenses
+                    .ToList()
+                    .Where(x =>
+                        x.ExpenseDate.Month == DateTime.UtcNow.Month &&
+                        x.ExpenseDate.Year == DateTime.UtcNow.Year)
+                    .Sum(x => x.Amount);
 
             ViewBag.TodayTotal =
                 _context.Expenses
@@ -60,17 +61,14 @@ namespace ExpenseTracker.Controllers
                     Description = model.Description,
                     ExpenseDate = model.ExpenseDate.ToUniversalTime(),
                     CreatedDate = DateTime.UtcNow,
-
-                    // Temporary user id
                     UserId = 1,
-
                     CategoryId = model.CategoryId
                 };
 
                 _context.Expenses.Add(expense);
                 _context.SaveChanges();
 
-                return Content("Expense Saved Successfully");
+                return RedirectToAction("List");
             }
 
             ViewBag.Categories = new SelectList(
@@ -80,15 +78,90 @@ namespace ExpenseTracker.Controllers
 
             return View(model);
         }
-        public IActionResult List()
+
+        public IActionResult List(
+            string searchText,
+            int? categoryId,
+            DateTime? fromDate,
+            DateTime? toDate)
         {
             var expenses = _context.Expenses
                 .Include(e => e.Category)
-                .OrderByDescending(e => e.ExpenseDate)
-                .ToList();
+                .AsQueryable();
 
-            return View(expenses);
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                expenses = expenses.Where(e =>
+                    e.Description.Contains(searchText));
+            }
+
+            if (categoryId.HasValue)
+            {
+                expenses = expenses.Where(e =>
+                    e.CategoryId == categoryId);
+            }
+
+            if (fromDate.HasValue)
+            {
+                var fromUtc =
+                    DateTime.SpecifyKind(
+                        fromDate.Value,
+                        DateTimeKind.Utc);
+
+                expenses = expenses.Where(e =>
+                    e.ExpenseDate >= fromUtc);
+            }
+
+            if (toDate.HasValue)
+            {
+                var toUtc =
+                    DateTime.SpecifyKind(
+                        toDate.Value.AddDays(1),
+                        DateTimeKind.Utc);
+
+                expenses = expenses.Where(e =>
+                    e.ExpenseDate < toUtc);
+            }
+
+
+            ViewBag.Categories = new SelectList(
+    _context.Categories,
+    "CategoryId",
+    "CategoryName");
+
+            var expenseList = expenses.ToList();
+
+            ViewBag.TotalExpenses =
+                expenseList.Count;
+
+            ViewBag.TotalAmount =
+                expenseList.Sum(x => x.Amount);
+
+            ViewBag.HighestExpense =
+                expenseList.Any()
+                    ? expenseList.Max(x => x.Amount)
+                    : 0;
+
+            var highestExpenseRecord = expenseList
+    .OrderByDescending(x => x.Amount)
+    .FirstOrDefault();
+
+            ViewBag.HighestExpenseCategory =
+                highestExpenseRecord?.Category?.CategoryName ?? "N/A";
+
+            ViewBag.AverageExpense =
+                expenseList.Any()
+                    ? expenseList.Average(x => x.Amount)
+                    : 0;
+
+            return View(
+                expenseList
+                    .OrderByDescending(e => e.ExpenseDate)
+                    .ToList());
+
+
         }
+
         public IActionResult Edit(int id)
         {
             var expense = _context.Expenses.Find(id);
@@ -99,16 +172,19 @@ namespace ExpenseTracker.Controllers
             }
 
             ViewBag.Categories = new SelectList(
-                _context.Categories.ToList(),
+                _context.Categories,
                 "CategoryId",
-                "CategoryName");
+                "CategoryName",
+                expense.CategoryId);
 
             return View(expense);
         }
+
         [HttpPost]
         public IActionResult Edit(Expense expense)
         {
-            var existingExpense = _context.Expenses.Find(expense.ExpenseId);
+            var existingExpense =
+                _context.Expenses.Find(expense.ExpenseId);
 
             if (existingExpense == null)
             {
@@ -117,6 +193,11 @@ namespace ExpenseTracker.Controllers
 
             existingExpense.Amount = expense.Amount;
             existingExpense.Description = expense.Description;
+            existingExpense.CategoryId = expense.CategoryId;
+            existingExpense.ExpenseDate =
+                    DateTime.SpecifyKind(
+                        expense.ExpenseDate,
+                        DateTimeKind.Utc);
 
             _context.SaveChanges();
 
@@ -139,3 +220,4 @@ namespace ExpenseTracker.Controllers
         }
     }
 }
+

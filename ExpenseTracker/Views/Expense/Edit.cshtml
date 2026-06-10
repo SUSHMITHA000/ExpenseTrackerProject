@@ -1,27 +1,102 @@
-﻿@model ExpenseTracker.Models.Expense
+﻿
+@model ExpenseTracker.Models.Expense
 
-<h2>Edit Expense</h2>
+<div class="container">
 
-<form method="post">
+    <div class="card shadow-lg border-0">
 
-    <input type="hidden" asp-for="ExpenseId" />
+        <div class="card-header bg-primary text-white">
 
-    <div>
-        <label>Amount</label>
-        <input asp-for="Amount" />
+            <h3 class="mb-0">
+                Edit Expense
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="post">
+
+                <input type="hidden"
+                       asp-for="ExpenseId" />
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Amount
+                    </label>
+
+                    <input asp-for="Amount"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Category
+                    </label>
+
+                    <select asp-for="CategoryId"
+                            asp-items="ViewBag.Categories"
+                            class="form-select">
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Expense Date
+                    </label>
+
+                    <input asp-for="ExpenseDate"
+                           type="date"
+                           class="form-control" />
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        Update Expense
+
+                    </button>
+
+                    <a asp-controller="Expense"
+                       asp-action="List"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
 
-    <br />
-
-    <div>
-        <label>Description</label>
-        <input asp-for="Description" />
-    </div>
-
-    <br />
-
-    <button type="submit">
-        Update
-    </button>
-
-</form>
+</div>
+```

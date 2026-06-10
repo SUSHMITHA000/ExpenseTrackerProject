@@ -325,3 +325,52 @@ body {
     .summary-card:hover {
         transform: translateY(-3px);
     }
+
+.filter-panel {
+    background: #2f2f2f;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.filter-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    background: #3a3a3a;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 220px;
+}
+
+    .filter-input:focus {
+        outline: none;
+        border-color: #6c63ff;
+    }
+
+.filter-btn {
+    min-width: 140px;
+    border-radius: 10px;
+}
+
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.filter-input {
+    min-width: 180px;
+}
+
+.filter-btn {
+    min-width: 110px;
+}
+
+

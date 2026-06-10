@@ -1,37 +1,265 @@
 ﻿@model IEnumerable<ExpenseTracker.Models.Expense>
 
-<h2>Expense List</h2>
+@{
+    var totalAmount = Model.Sum(x => x.Amount);
+}
 
-<table border="1" cellpadding="10">
+<div class="dashboard-box">
 
-    <tr>
-        <th>ID</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Actions</th>
-    </tr>
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.ExpenseId</td>
-            <td>@item.Amount</td>
-            <td>@item.Description</td>
-            <td>@item.ExpenseDate.ToShortDateString()</td>
-            <td>@item.Category.CategoryName</td>
-        </tr>
+        <h2>View Expenses</h2>
 
-        <td>
-            <a href="/Expense/Edit/@item.ExpenseId">Edit</a>
+        <a asp-controller="Expense"
+           asp-action="Index"
+           class="btn btn-primary">
+            + Add Expense
+        </a>
 
-            |
+    </div>
 
-            <a href="/Expense/Delete/@item.ExpenseId">
-                Delete
-            </a>
-        </td>
-    }
+    <div class="card shadow-sm mb-4">
 
-</table>
+        <div class="card-body">
+
+            <form method="get">
+
+                <div class="filter-panel">
+
+                    ```html
+                    <div class="filter-row">
+
+                        <input type="text"
+                               name="searchText"
+                               class="filter-input"
+                               placeholder="🔍 Search description..." />
+
+                        <select name="categoryId"
+                                class="filter-input"
+                                asp-items="ViewBag.Categories">
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                        </select>
+                        <div>
+                        <small class="text-white d-block mb-1">
+                            From Date
+                        </small>
+                        <input type="date"
+                               name="fromDate"
+                               class="filter-input"
+                               title="From Date" />
+                        </div>
+
+                        <div>
+                            <small class="text-white d-block mb-1">
+                                To Date
+                            </small>
+                        <input type="date"
+                               name="toDate"
+                               class="filter-input"
+                               title="To Date" />
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-dark filter-btn">
+
+                            Filter
+
+                        </button>
+
+                        <a asp-action="List"
+                           class="btn btn-secondary filter-btn">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+                    ```
+
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="stat-card card-blue">
+                <h6>Total Expenses</h6>
+                <h3>@ViewBag.TotalExpenses</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card card-green">
+                <h6>Total Amount</h6>
+                <h3>₹@ViewBag.TotalAmount</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card card-yellow">
+
+                <h6>Highest Expense</h6>
+
+                <h3>
+                    ₹@ViewBag.HighestExpense
+                </h3>
+
+                <small>
+                    @ViewBag.HighestExpenseCategory
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+            <div class="stat-card card-red">
+                <h6>Average Expense</h6>
+                <h3>₹@Math.Round((decimal)ViewBag.AverageExpense, 0)</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Expenses (@Model.Count())
+            </h5>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.ExpenseDate.ToString("dd MMM yyyy")
+                            </td>
+
+                            <td>
+
+                                @{
+                                    string badgeClass = "bg-secondary";
+
+                                    switch (item.Category.CategoryName)
+                                    {
+                                        case "Food":
+                                            badgeClass = "bg-primary";
+                                            break;
+
+                                        case "Transport":
+                                            badgeClass = "bg-success";
+                                            break;
+
+                                        case "Bills":
+                                            badgeClass = "bg-warning";
+                                            break;
+
+                                        case "Shopping":
+                                            badgeClass = "bg-danger";
+                                            break;
+
+                                        case "Entertainment":
+                                            badgeClass = "bg-info";
+                                            break;
+                                    }
+                                }
+
+                                <span class="badge @badgeClass">
+                                    @item.Category.CategoryName
+                                </span>
+
+                            </td>
+
+                            <td>
+                                @item.Description
+                            </td>
+
+                            <td class="fw-bold text-danger">
+                                ₹@item.Amount
+                            </td>
+
+                            <td>
+
+                                <a asp-controller="Expense"
+                                   asp-action="Edit"
+                                   asp-route-id="@item.ExpenseId"
+                                   class="btn btn-sm btn-outline-primary">
+                                    Edit
+                                </a>
+
+                                <a asp-controller="Expense"
+                                   asp-action="Delete"
+                                   asp-route-id="@item.ExpenseId"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Are you sure you want to delete this expense?');">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+                <tfoot>
+
+                    <tr class="table-light">
+
+                        <td colspan="3"
+                            class="text-end fw-bold">
+                            Total Amount:
+                        </td>
+
+                        <td class="fw-bold">
+                            ₹@totalAmount
+                        </td>
+
+                        <td></td>
+
+                    </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+ 
+
+</div>
